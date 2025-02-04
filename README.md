@@ -59,3 +59,55 @@ A modelagem contempla as seguintes tabelas:
 - **agendamentos:** Relaciona o cliente ao serviço agendado, incluindo data, horário e quantidade de participantes.  
 - **procedimentos:** Associa cada agendamento a um procedimento, registrando informações adicionais, como valor adicional, desconto e valor final.  
 - **procedimento_funcionarios:** Tabela associativa que relaciona os procedimentos aos funcionários envolvidos, implementando o relacionamento N:N.
+
+---
+
+# Diagrama do Banco de Dados
+
+```mermaid
+erDiagram
+    CLIENTES {
+      INT id_cliente PK
+      VARCHAR(40) nome
+      VARCHAR(12) cpf
+    }
+    SERVICOS {
+      INT id_servico PK
+      VARCHAR(45) nome_servico
+      VARCHAR(45) pacote
+      TIME duracao
+      FLOAT preco
+    }
+    FUNCIONARIOS {
+      INT id_funcionario PK
+      VARCHAR(45) nome
+    }
+    AGENDAMENTOS {
+      INT id_agendamento PK
+      INT id_cliente FK
+      INT id_servico FK
+      DATE dia
+      TIME horario
+      INT qtd_participantes
+    }
+    PROCEDIMENTOS {
+      INT id_procedimento PK
+      INT id_agendamento FK UNIQUE
+      BOOLEAN adicional
+      VARCHAR(45) descricao_adicional
+      FLOAT valor_adicional
+      FLOAT desconto
+      FLOAT valor_final
+    }
+    PROCEDIMENTO_FUNCIONARIOS {
+      INT id_procedimento FK
+      INT id_funcionario FK
+    }
+
+    %% Relacionamentos
+    CLIENTES ||--o{ AGENDAMENTOS : "realiza"
+    SERVICOS ||--o{ AGENDAMENTOS : "oferece"
+    AGENDAMENTOS ||--|| PROCEDIMENTOS : "gera"
+    PROCEDIMENTOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "associa"
+    FUNCIONARIOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "atua em"
+
