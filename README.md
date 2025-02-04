@@ -84,15 +84,15 @@ erDiagram
     }
     AGENDAMENTOS {
       INT id_agendamento PK
-      INT id_cliente FK
-      INT id_servico FK
+      INT id_cliente
+      INT id_servico
       DATE dia
       TIME horario
       INT qtd_participantes
     }
     PROCEDIMENTOS {
       INT id_procedimento PK
-      INT id_agendamento FK UNIQUE
+      INT id_agendamento
       BOOLEAN adicional
       VARCHAR(45) descricao_adicional
       FLOAT valor_adicional
@@ -100,14 +100,13 @@ erDiagram
       FLOAT valor_final
     }
     PROCEDIMENTO_FUNCIONARIOS {
-      INT id_procedimento FK
-      INT id_funcionario FK
+      INT id_procedimento
+      INT id_funcionario
     }
 
-    %% Relacionamentos
-    CLIENTES ||--o{ AGENDAMENTOS : "realiza"
-    SERVICOS ||--o{ AGENDAMENTOS : "oferece"
-    AGENDAMENTOS ||--|| PROCEDIMENTOS : "gera"
-    PROCEDIMENTOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "associa"
-    FUNCIONARIOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "atua em"
+    CLIENTES ||--o{ AGENDAMENTOS : realiza
+    SERVICOS ||--o{ AGENDAMENTOS : oferece
+    AGENDAMENTOS ||--|| PROCEDIMENTOS : gera
+    PROCEDIMENTOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : associa
+    FUNCIONARIOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : atua em
 
