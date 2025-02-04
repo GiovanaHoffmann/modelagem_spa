@@ -2,12 +2,13 @@
 
 Este repositório contém o código SQL para um sistema de controle de um SPA, que gerencia o cadastro de clientes, serviços, funcionários, agendamentos e procedimentos. O sistema automatiza o cálculo do valor final dos procedimentos, garantindo que os dados sejam inseridos e calculados de forma consistente.
 
+**Observação:** este é um projeto com fins de estudo e prática, criado a partir da observação de um cenário real. Para sua execução, uma breve entrevista foi realizada para que houvesse uma noção da dinâmica do estabelecimento que foi usado como referencial. 
 ---
 
 ## Regras de Negócio
 
 - **Clientes:**  
-  - Cada cliente possui cadastro com informações como nome e CPF.  
+  - Cada cliente possui cadastro com informações como nome, CPF e telefone.  
   - Um cliente pode realizar vários agendamentos.
 
 - **Serviços:**  
@@ -15,7 +16,7 @@ Este repositório contém o código SQL para um sistema de controle de um SPA, q
   - Cada serviço pode ser agendado por vários clientes.
 
 - **Funcionários:**  
-  - Cada funcionário possui cadastro com informações essenciais, como o nome.  
+  - Cada funcionário possui cadastro com o nome e id.  
   - Um procedimento pode envolver mais de um funcionário (relacionamento N:N), implementado por uma tabela associativa.
 
 - **Agendamentos:**  
@@ -23,7 +24,7 @@ Este repositório contém o código SQL para um sistema de controle de um SPA, q
   - São registradas a data, o horário e a quantidade de participantes, permitindo que um cliente agende o serviço para mais de uma pessoa.
 
 - **Procedimentos:**  
-  - Cada agendamento possui um procedimento associado que registra se o serviço foi realizado, se houve valor adicional e se foi aplicado algum desconto.  
+  - Cada agendamento possui um procedimento associado que registra se houve valor adicional, o porquê e se foi aplicado algum desconto.  
   - O procedimento reúne informações do agendamento, do serviço prestado e dos funcionários envolvidos.  
   - O valor final do procedimento é obtido somando o preço do serviço com o valor adicional e subtraindo o desconto.
 
@@ -104,9 +105,9 @@ erDiagram
       INT id_funcionario
     }
 
-    CLIENTES ||--o{ AGENDAMENTOS : realiza
-    SERVICOS ||--o{ AGENDAMENTOS : oferece
-    AGENDAMENTOS ||--|| PROCEDIMENTOS : gera
+    CLIENTES ||--o{ AGENDAMENTOS : "realiza"
+    SERVICOS ||--o{ AGENDAMENTOS : "oferece"
+    AGENDAMENTOS ||--|| PROCEDIMENTOS : "gera"
     PROCEDIMENTOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "associa"
     FUNCIONARIOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "atua em"
 
