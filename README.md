@@ -105,7 +105,7 @@ erDiagram
       DATE dia
       TIME horario
       INT qtd_participantes
-      VARCHAR(20) status  -- Pode ser 'Pendente', 'Confirmado', 'Concluído', 'Cancelado'
+      VARCHAR(20) status 
       INT id_metodo_pagamento FK
     }
     PROCEDIMENTOS {
