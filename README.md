@@ -72,6 +72,9 @@ erDiagram
       INT id_cliente PK
       VARCHAR(40) nome
       VARCHAR(12) cpf
+      VARCHAR(100) email
+      VARCHAR(255) endereco
+      VARCHAR(12) telefone
     }
     SERVICOS {
       INT id_servico PK
@@ -86,15 +89,17 @@ erDiagram
     }
     AGENDAMENTOS {
       INT id_agendamento PK
-      INT id_cliente
-      INT id_servico
+      INT id_cliente FK
+      INT id_servico FK
+      INT id_metodo_pagamento FK
       DATE dia
       TIME horario
       INT qtd_participantes
+      ENUM('Pendente', 'Confirmado', 'Concluído', 'Cancelado') status
     }
     PROCEDIMENTOS {
       INT id_procedimento PK
-      INT id_agendamento
+      INT id_agendamento FK UNIQUE
       BOOLEAN adicional
       VARCHAR(45) descricao_adicional
       FLOAT valor_adicional
@@ -102,8 +107,37 @@ erDiagram
       FLOAT valor_final
     }
     PROCEDIMENTO_FUNCIONARIOS {
-      INT id_procedimento
-      INT id_funcionario
+      INT id_procedimento PK FK
+      INT id_funcionario PK FK
+    }
+    METODOS_PAGAMENTO {
+      INT id_metodo PK
+      VARCHAR(50) metodo_nome
+    }
+    COMISSOES {
+      INT id_comissao PK
+      INT id_funcionario FK
+      INT id_procedimento FK
+      FLOAT percentual_comissao
+      FLOAT valor_comissao
+    }
+    FEEDBACKS {
+      INT id_feedback PK
+      INT id_agendamento FK
+      INT nota CHECK (nota >= 1 AND nota <= 5)
+      TEXT comentario
+    }
+    PROMOCOES {
+      INT id_promocao PK
+      VARCHAR(100) nome_promocao
+      TEXT descricao
+      FLOAT desconto_percentual
+      DATE data_inicio
+      DATE data_fim
+    }
+    SERVICOS_PROMOCOES {
+      INT id_servico PK FK
+      INT id_promocao PK FK
     }
 
     CLIENTES ||--o{ AGENDAMENTOS : "realiza"
@@ -111,4 +145,9 @@ erDiagram
     AGENDAMENTOS ||--|| PROCEDIMENTOS : "gera"
     PROCEDIMENTOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "associa"
     FUNCIONARIOS ||--o{ PROCEDIMENTO_FUNCIONARIOS : "atua em"
-
+    AGENDAMENTOS }|--|| METODOS_PAGAMENTO : "usa"
+    FUNCIONARIOS ||--o{ COMISSOES : "recebe"
+    PROCEDIMENTOS ||--o{ COMISSOES : "gera"
+    AGENDAMENTOS ||--o{ FEEDBACKS : "gera"
+    SERVICOS ||--o{ SERVICOS_PROMOCOES : "participa"
+    PROMOCOES ||--o{ SERVICOS_PROMOCOES : "aplica"
