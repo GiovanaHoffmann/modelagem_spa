@@ -97,3 +97,15 @@ CREATE TABLE metodos_pagamento (
 ALTER TABLE agendamentos
 ADD COLUMN id_metodo_pagamento INT,
 ADD FOREIGN KEY (id_metodo_pagamento) REFERENCES metodos_pagamento(id_metodo);
+
+-- controle de comissão dos funcionários com base no valor dos serviços
+CREATE TABLE comissoes (
+    id_comissao INT AUTO_INCREMENT PRIMARY KEY,
+    id_funcionario INT,
+    id_procedimento INT,
+    percentual_comissao FLOAT,
+    valor_comissao FLOAT,
+    FOREIGN KEY (id_funcionario) REFERENCES funcionarios(id_funcionario),
+    FOREIGN KEY (id_procedimento) REFERENCES procedimentos(id_procedimento)
+);
+
