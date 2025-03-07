@@ -87,3 +87,13 @@ ADD COLUMN endereco VARCHAR(255);
 -- Adicionar uma coluna para o status do agendamento
 ALTER TABLE agendamentos
 ADD COLUMN status ENUM('Pendente', 'Confirmado', 'Concluído', 'Cancelado') DEFAULT 'Pendente';
+
+CREATE TABLE metodos_pagamento (
+    id_metodo INT AUTO_INCREMENT PRIMARY KEY,
+    metodo_nome VARCHAR(50) NOT NULL
+);
+
+-- Alterar a tabela agendamentos para associar o método de pagamento
+ALTER TABLE agendamentos
+ADD COLUMN id_metodo_pagamento INT,
+ADD FOREIGN KEY (id_metodo_pagamento) REFERENCES metodos_pagamento(id_metodo);
