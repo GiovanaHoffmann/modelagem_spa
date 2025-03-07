@@ -78,3 +78,12 @@ BEGIN
 END;
 //
 DELIMITER ;
+
+-- Incluir o endereço e e-mail dos clientes
+ALTER TABLE clientes
+ADD COLUMN email VARCHAR(100),
+ADD COLUMN endereco VARCHAR(255);
+
+-- Adicionar uma coluna para o status do agendamento
+ALTER TABLE agendamentos
+ADD COLUMN status ENUM('Pendente', 'Confirmado', 'Concluído', 'Cancelado') DEFAULT 'Pendente';
