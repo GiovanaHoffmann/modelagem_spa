@@ -109,3 +109,12 @@ CREATE TABLE comissoes (
     FOREIGN KEY (id_procedimento) REFERENCES procedimentos(id_procedimento)
 );
 
+CREATE TABLE feedbacks (
+    id_feedback INT AUTO_INCREMENT PRIMARY KEY,
+    id_agendamento INT,
+    nota INT CHECK (nota >= 1 AND nota <= 5),
+    comentario TEXT,
+    FOREIGN KEY (id_agendamento) REFERENCES agendamentos(id_agendamento)
+);
+
+
