@@ -135,7 +135,7 @@ erDiagram
     FEEDBACKS {
       INT id_feedback PK
       INT id_agendamento FK
-      INT nota CHECK (nota >= 1 AND nota <= 5)
+      INT nota 
       TEXT comentario
     }
     PROMOCOES {
@@ -162,3 +162,8 @@ erDiagram
     AGENDAMENTOS ||--o{ FEEDBACKS : "avalia"
     PROMOCOES ||--o{ SERVICOS_PROMOCOES : "aplica"
     SERVICOS ||--o{ SERVICOS_PROMOCOES : "pertence"
+```
+
+**Observações**: 
+1. O atributo status da tabela AGENDAMENTOS, originalmente do tipo ENUM('Pendente', 'Confirmado', 'Concluído' 'Cancelado'), foi removido do diagrama, pois o Mermaid não suporta diretamente tipos ENUM. Para manter a consistência, essa informação deve ser documentada separadamente. No banco de dados, esse campo pode ser implementado como um VARCHAR(20) com restrição de valores permitidos. 
+2. A coluna nota na tabela FEEDBACKS deve aceitar apenas valores entre 1 e 5. Essa restrição é implementada no banco de dados com CHECK (nota >= 1 AND nota <= 5).
