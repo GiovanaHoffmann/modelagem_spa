@@ -118,3 +118,22 @@ CREATE TABLE feedbacks (
 );
 
 
+CREATE TABLE promocoes (
+    id_promocao INT AUTO_INCREMENT PRIMARY KEY,
+    nome_promocao VARCHAR(100),
+    descricao TEXT,
+    desconto_percentual FLOAT,
+    data_inicio DATE,
+    data_fim DATE
+);
+
+-- Associando promoção ao serviço, se necessário
+CREATE TABLE servicos_promocoes (
+    id_servico INT,
+    id_promocao INT,
+    PRIMARY KEY (id_servico, id_promocao),
+    FOREIGN KEY (id_servico) REFERENCES servicos(id_servico),
+    FOREIGN KEY (id_promocao) REFERENCES promocoes(id_promocao)
+);
+
+
