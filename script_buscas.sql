@@ -53,3 +53,43 @@ WHERE p.valor_adicional > 0 OR p.desconto > 0;
 SELECT * FROM agendamentos
 WHERE dia = '2025-02-06';
 
+-- faturamento por mes
+SELECT 
+    YEAR(a.dia) AS ano,
+    MONTH(a.dia) AS mes,
+    SUM(p.valor_final) AS faturamento_total
+FROM agendamentos a
+JOIN procedimentos p ON a.id_agendamento = p.id_agendamento
+GROUP BY ano, mes
+ORDER BY ano, mes;
+
+-- servicos mais procurados baseado na qtd de agendamentos
+SELECT 
+    s.nome_servico, 
+    COUNT(a.id_agendamento) AS total_agendamentos
+FROM agendamentos a
+JOIN servicos s ON a.id_servico = s.id_servico
+GROUP BY s.nome_servico
+ORDER BY total_agendamentos DESC;
+
+
+-- funcionarios com mais comissoes
+SELECT 
+    f.nome, 
+    SUM(c.valor_comissao) AS total_comissao
+FROM funcionarios f
+JOIN comissoes c ON f.id_funcionario = c.id_funcionario
+GROUP BY f.nome
+ORDER BY total_comissao DESC;
+
+
+-- avaliacoes / feedbacks
+SELECT 
+    c.nome AS nome_cliente, 
+    AVG(f.nota) AS media_nota,
+    COUNT(f.id_feedback) AS total_feedback
+FROM feedbacks f
+JOIN agendamentos a ON f.id_agendamento = a.id_agendamento
+JOIN clientes c ON a.id_cliente = c.id_cliente
+GROUP BY c.nome
+ORDER BY media_nota DESC;
