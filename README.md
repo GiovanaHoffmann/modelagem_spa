@@ -3,6 +3,7 @@
 Este repositório contém o código SQL para um sistema de controle de um SPA, que gerencia o cadastro de clientes, serviços, funcionários, agendamentos e procedimentos. O sistema automatiza o cálculo do valor final dos procedimentos, garantindo que os dados sejam inseridos e calculados de forma consistente.
 
 **Observação:** este é um projeto com fins de estudo e prática, criado a partir da observação de um cenário real. Para sua execução, uma breve entrevista foi realizada para que houvesse uma noção da dinâmica do estabelecimento que foi usado como referencial. 
+
 ---
 
 ## Regras de Negócio
